@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = {
     context : __dirname + "/app",
 
@@ -7,7 +8,8 @@ module.exports = {
     },
 
     resolve : {
-        extensions : ['', '.js', '.jsx', '.json']
+        extensions : ['', '.js', '.jsx', '.json'],
+        root : path.resolve(__dirname, './app/scripts')
     },
 
     module : {
