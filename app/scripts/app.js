@@ -6,6 +6,8 @@ import About from "./views/About";
 
 import { Router, Route, Link, browserHistory } from "react-router";
 
+import "../styles/app.scss"
+
 const AppMounter = document.getElementById("app");
 
 class App extends React.Component {

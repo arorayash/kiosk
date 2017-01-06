@@ -1,4 +1,7 @@
 const path = require("path");
+const precss = require("precss");
+const autoprefixer = require("autoprefixer");
+
 module.exports = {
     context : __dirname + "/app",
 
@@ -12,6 +15,8 @@ module.exports = {
         root : path.resolve(__dirname, './app/scripts')
     },
 
+    devtool : "inline-source-map",
+
     module : {
         loaders : [
             {
@@ -22,8 +27,16 @@ module.exports = {
             {
                 test : /\.html$/,
                 loader : "file?name=[name].[ext]"
+            },
+            {
+                test : /\.scss$/,
+                loader : "style!css?sourceMap!postcss!sass?sourceMap"
             }
         ]
+    },
+
+    postcss: function() {
+        return [autoprefixer, precss];
     },
 
     output : {
