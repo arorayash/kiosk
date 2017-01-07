@@ -31,6 +31,10 @@ module.exports = {
             {
                 test : /\.scss$/,
                 loader : "style!css?sourceMap!postcss!sass?sourceMap"
+            },
+            {
+                test : /\.(jp?g|png|gif|svg)$/i,
+                loader : "file-loader?name=/public/media/[name].[ext]"
             }
         ]
     },
