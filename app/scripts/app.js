@@ -9,7 +9,8 @@ import { Router, Route, Link, browserHistory } from "react-router";
 
 import sample from "./helpers/sample";
 
-import "../styles/app.scss"
+import "../styles/app.scss";
+import logo from "../../public/media/logo.svg";
 
 const AppMounter = document.getElementById("app");
 
@@ -129,9 +130,9 @@ class ContributionForm extends React.Component {
             <form ref="contributionForm" onSubmit={this.makeContribution.bind(this)}>
                 <input type="text" ref="name" placeholder="Name" required/>
                 <input type="text" ref="link" placeholder="Link" required/>
-                <input type="img" ref="file" accept="image/*" placeholder="Link icon"/>
-                <textarea type="text" ref="desc" placeholder="Description"></textarea>
-                <button type="submit">Submit</button>
+                <input type="text" ref="img" accept="image/*" placeholder="Link icon"/>
+                <textarea type="text" ref="desc" defaultValue={"No Description"} placeholder="Description"></textarea>
+                <input type="submit" />
             </form>
         )
     }
