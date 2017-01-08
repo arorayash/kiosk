@@ -16,7 +16,7 @@ body{
 
   ul{
     padding: 0;
-    display: flex;
+    display: block;
     height: 50px;
     align-items: center;
     justify-content: center;
@@ -58,4 +58,10 @@ body{
   border: 1px solid palevioletred;
   height: 100vh;
   width: 33vw;
+}
+
+.feed{
+    img{
+      max-width: 250px;
+    }
 }
