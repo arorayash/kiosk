@@ -2,6 +2,8 @@ import React from "react";
 
 import logo from "../../../public/media/logo.svg";
 
+import h from "../helpers/helper";
+
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -16,17 +18,21 @@ class Home extends React.Component {
     render() {
         return (
             <div className="home">
-            <h1>Home</h1>
+                <div className="background" onMouseMove={h.mouseMove()}></div>
                 <img className="logo" src={logo} alt=""/>
-                <form onSubmit={this.goToMain.bind(this)}>
-                    <select ref="storeId">
-                        <option value="design">Design</option>
-                        <option value="tech">Tech</option>
-                        <option value="entrepreneurship">Entr</option>
-                        <option value="research">Research</option>
-                    </select>
-                    <input type="submit"/>
-                </form>
+                <div className="formWrapper">
+                    <h2>Kiosk</h2>
+                    <h4>An AI powered, curated library of the articles, researches, trends and news.</h4>
+                    <form className="storeForm" onSubmit={this.goToMain.bind(this)}>
+                        <select ref="storeId">
+                            <option value="design">Design</option>
+                            <option value="tech">Tech</option>
+                            <option value="entrepreneurship">Entr</option>
+                            <option value="research">Research</option>
+                        </select>
+                        <input type="submit"/>
+                    </form>
+                </div>
             </div>
         )
     }
