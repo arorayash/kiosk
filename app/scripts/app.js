@@ -47,6 +47,7 @@ class App extends React.Component {
         console.log(read);
         //let timeStamp = (new Date()).getTime();
         //this.state.readings["read-" + timeStamp] = read;
+        if(this.state.readings[read]===1) return;
 
         this.state.readings[read] = 1;
         this.setState(this.state.readings);
@@ -63,7 +64,7 @@ class App extends React.Component {
                     </ul>
                 </nav>*/}
                 <Main tagline="A curated list of resources" renderFeed={this.renderFeedList.bind(this)}/>
-                <ReadingList fedds={this.state.feeds} readings={this.state.readings}/>
+                <ReadingList feeds={this.state.feeds} readings={this.state.readings}/>
                 <Contribution addFeed={this.addFeed.bind(this)} loadFeed={this.loadSampleFeeds.bind(this)}/>
             </div>
         );
@@ -87,8 +88,14 @@ class Main extends React.Component {
 }
 
 class ReadingList extends React.Component {
-    renderReadItem(item){
-        return <li>{item}</li>
+    renderReadItem(key){
+        var item = this.props.feeds[key];
+        return (
+            <div>
+            <li key={key}>{item.name}</li>
+            <button>C</button>
+            </div>
+        )
     }
 
     render () {
