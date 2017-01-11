@@ -63,7 +63,7 @@ class App extends React.Component {
                     </ul>
                 </nav>*/}
                 <Main tagline="A curated list of resources" renderFeed={this.renderFeedList.bind(this)}/>
-                <ReadingList/>
+                <ReadingList fedds={this.state.feeds} readings={this.state.readings}/>
                 <Contribution addFeed={this.addFeed.bind(this)} loadFeed={this.loadSampleFeeds.bind(this)}/>
             </div>
         );
@@ -87,10 +87,19 @@ class Main extends React.Component {
 }
 
 class ReadingList extends React.Component {
+    renderReadItem(item){
+        return <li>{item}</li>
+    }
+
     render () {
+        var readItemIds = Object.keys(this.props.readings);
+
         return (
             <div className="readingList">
                 <h2>ReadingList</h2>
+                <ul>
+                    {readItemIds.map(this.renderReadItem.bind(this))}
+                </ul>
             </div>
         )
     }

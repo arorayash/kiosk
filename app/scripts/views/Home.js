@@ -1,6 +1,8 @@
 import React from "react";
 
 import logo from "../../../public/media/logo.svg";
+import bg from "../../../public/media/kiosk_bg.svg";
+
 
 import h from "../helpers/helper";
 
@@ -16,8 +18,11 @@ class Home extends React.Component {
     }
 
     render() {
+        var setBg = {
+            background : `url(${bg})`
+        }
         return (
-            <div className="home">
+            <div className="home" style={setBg}>
                 <div className="background"></div>
                 <img className="logo" src={logo} alt=""/>
                 <div className="formWrapper">
