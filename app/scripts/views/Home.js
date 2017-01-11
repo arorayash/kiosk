@@ -18,7 +18,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className="home">
-                <div className="background" onMouseMove={h.mouseMove()}></div>
+                <div className="background"></div>
                 <img className="logo" src={logo} alt=""/>
                 <div className="formWrapper">
                     <h2>Kiosk</h2>

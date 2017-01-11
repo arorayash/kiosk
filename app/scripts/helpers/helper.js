@@ -5,7 +5,8 @@ let helpers = {
 
     mouseMove : function(e){
         console.log(this);
-       /* let bRect = this.getBoundingClientRect();
+      //  this.check();
+        let bRect = this.getBoundingClientRect();
         let mX = e.pageX;
         let mY = e.pageY;
         let pX = Math.floor((mX - bRect.left) / bRect.width * 100);
@@ -13,7 +14,7 @@ let helpers = {
         let rotX = (pY - 50)/5;
         let rotY = -(pX - 50)/5;
 
-        this.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;  */
+        this.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     },
 
     mouseLeave : function(id){

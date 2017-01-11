@@ -40,7 +40,16 @@ class App extends React.Component {
     }
 
     renderOneFeed(key) {
-        return <Feed key={key} index={key} details={this.state.feeds[key]} />;
+        return <Feed key={key} index={key} details={this.state.feeds[key]} addToRead={this.addToReadList.bind(this)}/>;
+    }
+
+    addToReadList(read) {
+        console.log(read);
+        //let timeStamp = (new Date()).getTime();
+        //this.state.readings["read-" + timeStamp] = read;
+
+        this.state.readings[read] = 1;
+        this.setState(this.state.readings);
     }
 
     render() {
@@ -139,6 +148,12 @@ class ContributionForm extends React.Component {
 }
 
 class Feed extends React.Component {
+
+    addToReadings(event){
+        this.props.addToRead(this.props.index);
+        //console.log(this);
+    }
+
     render() {
         return (
             <li className="feed">
@@ -148,6 +163,7 @@ class Feed extends React.Component {
                 <h4>
                     <a href={this.props.details.link}>Open Article</a>
                 </h4>
+                <button onClick={this.addToReadings.bind(this)}>Add to Read</button>
                 <hr/>
             </li>
         )
