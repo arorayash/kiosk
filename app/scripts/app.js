@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Home from "./views/Home";
-import Login from "./views/Login";
-import About from "./views/About";
+import Header from "./views/Header";
+
 
 import { Router, Route, Link, browserHistory } from "react-router";
 
@@ -14,6 +14,9 @@ import logo from "../../public/media/logo.svg";
 
 const AppMounter = document.getElementById("app");
 
+//Firebase
+import base from "./helpers/keys";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +24,18 @@ class App extends React.Component {
             feeds : {},
             readings : {}
         }
+    }
+
+    componentDidMount() {
+       base.syncState(this.props.params.storeId + '/feeds', {
+           context : this,
+           state : 'feeds'
+       })
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem('reading-'+ this.props.params.storeId, JSON.stringify(nextState.readings));
+        //console.log(nextState.readings);
     }
 
     addFeed(feed) {
@@ -43,13 +58,13 @@ class App extends React.Component {
         return <Feed key={key} index={key} details={this.state.feeds[key]} addToRead={this.addToReadList.bind(this)}/>;
     }
 
-    addToReadList(read) {
-        console.log(read);
+    addToReadList(key) {
+        //console.log(key);
         //let timeStamp = (new Date()).getTime();
         //this.state.readings["read-" + timeStamp] = read;
-        if(this.state.readings[read]===1) return;
+        if(this.state.readings[key]===1) return;
 
-        this.state.readings[read] = 1;
+        this.state.readings[key] = 1;
         this.setState(this.state.readings);
     }
 
@@ -63,6 +78,7 @@ class App extends React.Component {
                         <li><Link className="link" to="/rooms">Rooms</Link></li>
                     </ul>
                 </nav>*/}
+                <Header/>
                 <Main tagline="A curated list of resources" renderFeed={this.renderFeedList.bind(this)}/>
                 <ReadingList feeds={this.state.feeds} readings={this.state.readings}/>
                 <Contribution addFeed={this.addFeed.bind(this)} loadFeed={this.loadSampleFeeds.bind(this)}/>
@@ -88,12 +104,18 @@ class Main extends React.Component {
 }
 
 class ReadingList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.renderReadItem = this.renderReadItem.bind(this);
+    }
+
     renderReadItem(key){
         var item = this.props.feeds[key];
+        console.log(item);
         return (
-            <div>
-            <li key={key}>{item.name}</li>
-            <button>C</button>
+            <div key={key}>
+            <li>{item["name"]}</li>
+            <button>X</button>
             </div>
         )
     }
@@ -105,7 +127,7 @@ class ReadingList extends React.Component {
             <div className="readingList">
                 <h2>ReadingList</h2>
                 <ul>
-                    {readItemIds.map(this.renderReadItem.bind(this))}
+                    {readItemIds.map(this.renderReadItem)}
                 </ul>
             </div>
         )
@@ -189,7 +211,6 @@ class Feed extends React.Component {
 const routes = <Router history = { browserHistory }>
                     <Route path="/" component={Home} />
                     <Route path="/:storeId" component={App} />
-                    <Route path="about" component={About} />
                     <Route path="*" component={NotFound}/>
                </Router>;
 

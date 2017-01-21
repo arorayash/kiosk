@@ -8,7 +8,7 @@ body{
 .mainApp{
   width: 100vw;
   text-align: center;
-  display: flex;
+  display: block;
 
   ul{
     padding: 0;
@@ -111,13 +111,22 @@ body{
 .main{
   border: 1px solid palevioletred;
   height: 100vh;
-  width: 33.33vw;
+  width: 67vw;
 }
 
 .readingList{
   border: 1px solid palevioletred;
   height: 100vh;
-  width: 33.33vw;
+  width: 33vw;
+  position: absolute;
+  top: 0;
+  right: -30vw;
+  transition: all .45s cubic-bezier(0.95, 0, 0.51, 0.99);
+  background: #fff;
+
+  &:hover{
+  right: 0;
+}
 }
 
 .contribution{
