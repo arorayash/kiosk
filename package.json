@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --history-api-fallback"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "react": "^15.4.1",
+    "react": "^15.4.2",
     "react-dom": "^15.4.1",
     "react-mixin": "^3.0.5",
     "react-router": "^3.0.0"

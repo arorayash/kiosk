@@ -1,21 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router, Route, Link, browserHistory } from "react-router";
+
+import "../styles/app.scss";
+import {logo} from "../../public/media/logo.svg";
 
 import Home from "./views/Home";
 import Header from "./views/Header";
-
-
-import { Router, Route, Link, browserHistory } from "react-router";
+import Contribution from "./views/ContibutionForm";
+import NotFound from "./views/NotFound"
 
 import sample from "./helpers/sample";
 
-import "../styles/app.scss";
-import logo from "../../public/media/logo.svg";
 
 const AppMounter = document.getElementById("app");
 
 //Firebase
-import base from "./helpers/keys";
+import Base0 from "./helpers/keys";
+
 
 class App extends React.Component {
     constructor(props) {
@@ -24,13 +26,16 @@ class App extends React.Component {
             feeds : {},
             readings : {}
         }
+        this.addFeed = this.addFeed.bind(this);
+        this.loadSampleFeeds = this.loadSampleFeeds.bind(this);
+        this.renderFeedList = this.renderFeedList.bind(this);
     }
 
     componentDidMount() {
-       base.syncState(this.props.params.storeId + '/feeds', {
+       Base0.base.syncState(this.props.params.storeId + '/feeds', {
            context : this,
            state : 'feeds'
-       })
+       });
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -79,9 +84,9 @@ class App extends React.Component {
                     </ul>
                 </nav>*/}
                 <Header/>
-                <Main tagline="A curated list of resources" renderFeed={this.renderFeedList.bind(this)}/>
+                <Main tagline="A curated list of resources" renderFeed={this.renderFeedList}/>
                 <ReadingList feeds={this.state.feeds} readings={this.state.readings}/>
-                <Contribution addFeed={this.addFeed.bind(this)} loadFeed={this.loadSampleFeeds.bind(this)}/>
+                <Contribution addFeed={this.addFeed} loadFeed={this.loadSampleFeeds}/>
             </div>
         );
     }
@@ -97,7 +102,7 @@ class Main extends React.Component {
             <div className="main">
                 <h2>Main</h2>
                 <h4>{this.props.tagline}</h4>
-                <ul>{this.props.renderFeed()}</ul>
+                <ul className="feedsWrapper">{this.props.renderFeed()}</ul>
             </div>
         )
     }
@@ -134,57 +139,6 @@ class ReadingList extends React.Component {
     }
 }
 
-class Contribution extends React.Component {
-    render () {
-        return (
-            <div className="contribution">
-                <h2>Contribution</h2>
-                <ContributionForm {...this.props}/>
-                <button onClick={this.props.loadFeed}>Add sample feeds</button>
-            </div>
-        )
-    }
-}
-
-class NotFound extends React.Component {
-    render () {
-        return (
-            <h2>Error 404!</h2>
-        )
-    }
-}
-
-class ContributionForm extends React.Component {
-    makeContribution(event) {
-        event.preventDefault();
-        console.log("submitting");
-
-        var contribution = {
-            name: this.refs.name.value,
-            link: this.refs.link.value,
-            img: this.refs.img.value,
-            desc: this.refs.desc.value
-        }
-
-        this.props.addFeed(contribution);
-
-        this.refs.contributionForm.reset();
-    }
-
-
-    render () {
-        return (
-            <form ref="contributionForm" onSubmit={this.makeContribution.bind(this)}>
-                <input type="text" ref="name" placeholder="Name" required/>
-                <input type="text" ref="link" placeholder="Link" required/>
-                <input type="text" ref="img" accept="image/*" placeholder="Link icon"/>
-                <textarea type="text" ref="desc" defaultValue={"No Description"} placeholder="Description"></textarea>
-                <input type="submit" />
-            </form>
-        )
-    }
-}
-
 class Feed extends React.Component {
 
     addToReadings(event){
@@ -211,6 +165,7 @@ class Feed extends React.Component {
 const routes = <Router history = { browserHistory }>
                     <Route path="/" component={Home} />
                     <Route path="/:storeId" component={App} />
+                    <Route path="/:storeId/contribute" component={Contribution}/>
                     <Route path="*" component={NotFound}/>
                </Router>;
 
